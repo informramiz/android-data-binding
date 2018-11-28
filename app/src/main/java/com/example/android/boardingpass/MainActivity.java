@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     //COMPLETED (3) Create a data binding instance called mBinding of type ActivityMainBinding
     ActivityMainBinding mBinding;
-    private SimpleDateFormat mSimpleDateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         // COMPLETED (4) Set the Content View using DataBindingUtil to the activity_main layout
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
-        mSimpleDateFormat = new SimpleDateFormat(getString(R.string.timeFormat), Locale.US);
 
         // COMPLETED (5) Load a BoardingPassInfo object with fake data using FakeDataUtils
         BoardingPassInfo boardingPassInfo = FakeDataUtils.generateFakeBoardingPassInfo();
@@ -55,16 +52,18 @@ public class MainActivity extends AppCompatActivity {
         // COMPLETED (6) Use mBinding to set the Text in all the textViews using the data in info
         // COMPLETED (7) Use a SimpleDateFormat formatter to set the formatted value in time text views
         // COMPLETED (8) Use TimeUnit methods to format the total minutes until boarding
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(getString(R.string.timeFormat), Locale.getDefault());
+
         mBinding.textViewPassengerName.setText(info.passengerName);
 
         mBinding.textViewOriginAirport.setText(info.originCode);
         mBinding.textViewDestinationAirport.setText(info.destCode);
 
-        mBinding.textViewBoardingTime.setText(mSimpleDateFormat.format(info.boardingTime));
+        mBinding.textViewBoardingTime.setText(simpleDateFormat.format(info.boardingTime));
         mBinding.textViewBoardingInCountdown.setText(getString(R.string.countDownFormat, 0, info.getMinutesUntilBoarding()));
 
-        mBinding.textViewDepartureTime.setText(mSimpleDateFormat.format(info.departureTime));
-        mBinding.textViewArrivalTime.setText(mSimpleDateFormat.format(info.arrivalTime));
+        mBinding.textViewDepartureTime.setText(simpleDateFormat.format(info.departureTime));
+        mBinding.textViewArrivalTime.setText(simpleDateFormat.format(info.arrivalTime));
 
         mBinding.textViewTerminal.setText(info.departureTerminal);
         mBinding.textViewGate.setText(info.departureGate);
